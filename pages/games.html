@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DSSG - Game Browser</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <a href="/index.html">Start</a>
+        <a href="/pages/leaderboard.html">Leaderboard</a>
+        <a href="/pages/games.html">Games</a>
+        <a href="/pages/player.html">Players</a>
+        <a href="/pages/admin.html">Staff</a>
+    </nav>
+
+    <main>
+        <h1>Game Browser</h1>
+
+        <!-- Filters (placeholder) -->
+        <section id="filters">
+            <label>Player: <input type="text" id="player-filter"></label>
+            <label>School: <input type="text" id="school-filter"></label>
+            <button id="apply-filters">Apply</button>
+        </section>
+
+        <!-- Game list -->
+        <section id="game-list">
+            <ul>
+                <li><a href="/pages/game.html?id=match_1">White vs Black | 1-0 | +12 Elo</a></li>
+                <li><a href="/pages/game.html?id=match_2">You vs Eric | 1-0 | +12 Elo</a></li>
+                <li><a href="/pages/game.html?id=match_3">David vs Adrian | 0-1 | -4 Elo</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="/scripts/app.js"></script>
+</body>
+</html>
