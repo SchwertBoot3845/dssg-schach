@@ -1,0 +1,26 @@
+[
+  {
+    "id": "player_1",
+    "name": "David",
+    "elo": 1280,
+    "school": "AHG",
+    "tags": ["Top Player"],
+    "active": true
+  },
+  {
+    "id": "player_2",
+    "name": "Eric",
+    "elo": 640,
+    "school": "AHG",
+    "tags": [],
+    "active": true
+  },
+  {
+    "id": "player_3",
+    "name": "You",
+    "elo": 287,
+    "school": "AHG",
+    "tags": ["Beginner"],
+    "active": true
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "match_1",
+    "white": "player_1",
+    "black": "player_3",
+    "result": "1-0",
+    "eloBefore": { "white": 1280, "black": 287 },
+    "eloAfter": { "white": 1292, "black": 275 },
+    "timestamp": "2026-02-08T12:00:00",
+    "moves": "1. e4 e5 2. Nf3 Nc6 3. Bc4 ...",
+    "pgn": "[Event \"DSSG\"] ...",
+    "school": "AHG",
+    "endReason": "checkmate"
+  },
+  {
+    "id": "match_2",
+    "white": "player_3",
+    "black": "player_2",
+    "result": "1-0",
+    "eloBefore": { "white": 287, "black": 640 },
+    "eloAfter": { "white": 299, "black": 628 },
+    "timestamp": "2026-02-08T13:00:00",
+    "moves": "1. d4 d5 2. c4 ...",
+    "pgn": "[Event \"DSSG\"] ...",
+    "school": "AHG",
+    "endReason": "resignation"
+  }
+]

@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>DSSG - Start</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="css/main.css"> <!-- relative path -->
 </head>
 <body>
     <!-- Navbar -->
-  <nav>
-      <a href="index.html">Start</a>
-      <a href="pages/leaderboard.html">Leaderboard</a>
-      <a href="pages/games.html">Games</a>
-      <a href="pages/player.html">Players</a>
-      <a href="pages/admin.html">Staff</a>
-  </nav>
+    <nav>
+        <a href="index.html">Start</a>
+        <a href="pages/leaderboard.html">Leaderboard</a>
+        <a href="pages/games.html">Games</a>
+        <a href="pages/profile.html">Players</a> <!-- changed to profile.html -->
+        <a href="pages/admin.html">Staff</a>
+    </nav>
 
     <main>
         <!-- Featured Game -->
         <section id="featured-game">
             <h2>Featured Game</h2>
             <p>White vs Black | Result | Elo Change</p>
-            <a href="/pages/game.html?id=match_1">View Game</a>
+            <a href="pages/game.html?id=match_1">View Game</a>
         </section>
 
         <!-- Recent Games -->
         <section id="recent-games">
             <h2>Recent Games</h2>
             <ul>
-                <li><a href="/pages/game.html?id=match_2">You vs Eric (+12)</a></li>
-                <li><a href="/pages/game.html?id=match_3">David vs Adrian (+4)</a></li>
+                <li><a href="pages/game.html?id=match_2">You vs Eric (+12)</a></li>
+                <li><a href="pages/game.html?id=match_3">David vs Adrian (+4)</a></li>
             </ul>
         </section>
 
@@ -36,13 +36,13 @@
         <section id="top-players">
             <h2>Top 5 Players</h2>
             <ol>
-                <li><a href="/pages/player.html?id=player_1">David - 1280</a></li>
-                <li><a href="/pages/player.html?id=player_3">You - 287</a></li>
-                <li><a href="/pages/player.html?id=player_2">Eric - 640</a></li>
+                <li><a href="pages/profile.html?id=player_1">David - 1280</a></li>
+                <li><a href="pages/profile.html?id=player_3">You - 287</a></li>
+                <li><a href="pages/profile.html?id=player_2">Eric - 640</a></li>
             </ol>
         </section>
     </main>
 
-    <script src="/scripts/app.js"></script>
+    <script src="scripts/app.js"></script> <!-- relative path -->
 </body>
 </html>
