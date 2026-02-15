@@ -1,26 +1,23 @@
 [
   {
     "id": "player_1",
-    "name": "David",
-    "elo": 1280,
-    "school": "AHG",
-    "tags": ["Top Player"],
+    "name": "Theodor A. Scholz",
+    "elo": 1050,
+    "school": "school_1",
     "active": true
   },
   {
     "id": "player_2",
-    "name": "Eric",
-    "elo": 640,
-    "school": "AHG",
-    "tags": [],
+    "name": "Emilian Revenco",
+    "elo": 950,
+    "school": "school_1",
     "active": true
   },
   {
     "id": "player_3",
-    "name": "You",
-    "elo": 287,
-    "school": "AHG",
-    "tags": ["Beginner"],
+    "name": "Adrian Walter",
+    "elo": 1000,
+    "school": "school_1",
     "active": true
   }
 ]

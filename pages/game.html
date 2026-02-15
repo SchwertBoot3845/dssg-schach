@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>DSSG - Game Viewer</title>
-    <link rel="stylesheet" href="../css/main.css">
+<!-- Chess.js (logic) -->
+<script src="https://cdn.jsdelivr.net/npm/chess.js@1.1.0/chess.min.js"></script>
+
+<!-- Chessboard.js (UI) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard.min.js"></script>
+<meta charset="UTF-8">
+<title>DSSG - Game Viewer</title>
+<link rel="stylesheet" href="../css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav>
-        <a href="../index.html">Start</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="games.html">Games</a>
-        <a href="profile.html">Players</a>
-        <a href="admin.html">Staff</a>
-    </nav>
 
-    <main>
-        <h1>Game Viewer</h1>
-        <section id="game-info">
-            <p>White: David</p>
-            <p>Black: You</p>
-            <p>Result: 1-0</p>
-            <p>Elo Before: 1280 | 287</p>
-            <p>Elo After: 1292 | 275</p>
-            <p>End Reason: Checkmate</p>
-            <p>School: AHG</p>
-        </section>
+<!-- School Popup -->
+<div id="school-popup" style="position:absolute; display:none; z-index:1000; padding:10px; background:#222; color:#fff; border-radius:5px; box-shadow:0 0 10px rgba(0,0,0,0.5);">
+  <div id="popup-content" style="display:flex; align-items:center; gap:10px;">
+    <img id="popup-logo" src="" alt="Logo" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+    <div id="popup-text"></div>
+  </div>
+</div>
 
-        <section id="game-moves">
-            <h2>Moves</h2>
-            <pre>
-1. e4 e5
-2. Nf3 Nc6
-3. Bc4 ...
-            </pre>
-        </section>
-    </main>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-left"><img src="/images/logo.avif" class="logo" alt="DSSG Logo"></div>
+  <div class="nav-right">
+    <a href="/index.html">Start</a>
+    <a href="/pages/leaderboard.html">Leaderboard</a>
+    <a href="/pages/games.html">Games</a>
+    <a href="/pages/admin.html">Staff</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+</nav>
 
-    <script src="../scripts/app.js"></script>
+<main>
+
+<h1>Game Viewer</h1>
+
+<!-- Game Info -->
+<section id="game-info"></section>
+
+<!-- Moves / board -->
+<section id="game-moves"></section>
+
+<!-- Future: Interactive chessboard goes here -->
+<div id="interactive-board" style="margin-top:20px;"></div>
+
+</main>
+
+<script src="../scripts/app.js"></script>
+<script>
+loadGame();
+setupSchoolPopups();
+</script>
+
 </body>
 </html>

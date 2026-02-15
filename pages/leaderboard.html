@@ -1,54 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>DSSG - Leaderboard</title>
-    <link rel="stylesheet" href="/css/main.css">
+<meta charset="UTF-8">
+<title>DSSG - Leaderboard</title>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav>
-        <a href="../index.html">Start</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="games.html">Games</a>
-        <a href="player.html">Players</a>
-        <a href="admin.html">Staff</a>
-    </nav>
 
-    <main>
-        <h1>Leaderboard</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Elo</th>
-                    <th>School</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><a href="/pages/player.html?id=player_1">David</a></td>
-                    <td>1280</td>
-                    <td>AHG</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="/pages/player.html?id=player_3">You</a></td>
-                    <td>287</td>
-                    <td>AHG</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><a href="/pages/player.html?id=player_2">Eric</a></td>
-                    <td>640</td>
-                    <td>AHG</td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+<!-- School popup -->
+<div id="school-popup" style="position:absolute; display:none; z-index:1000; padding:10px; background:#222; color:#fff; border-radius:5px; box-shadow:0 0 10px rgba(0,0,0,0.5);">
+  <div id="popup-content" style="display:flex; align-items:center; gap:10px;">
+    <img id="popup-logo" src="" alt="Logo" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+    <div id="popup-text"></div>
+  </div>
+</div>
 
-    <script src="/scripts/app.js"></script>
+<nav class="navbar">
+  <div class="nav-left"><img src="/images/logo.avif" alt="DSSG Logo" class="logo"></div>
+  <div class="nav-right">
+    <a href="/index.html">Start</a>
+    <a href="/pages/leaderboard.html">Leaderboard</a>
+    <a href="/pages/games.html">Games</a>
+    <a href="/pages/admin.html">Staff</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+</nav>
+
+<main>
+<h1>Leaderboard</h1>
+
+<div style="margin-bottom:10px;">
+  <input id="search" placeholder="Search player...">
+  <select id="schoolFilter"><option value="all">All Schools</option></select>
+  <select id="sortBy">
+    <option value="elo">Sort by Elo</option>
+    <option value="games">Sort by Games</option>
+  </select>
+</div>
+
+<table border="1">
+<thead>
+<tr>
+<th>Name</th>
+<th>School</th>
+<th>Elo</th>
+<th>Games</th>
+</tr>
+</thead>
+<tbody id="board"></tbody>
+</table>
+</main>
+
+<script src="/scripts/app.js"></script>
+<script>
+async function initLeaderboardPage() {
+    await initData();
+
+    // populate school filter
+    const schoolSelect = document.getElementById("schoolFilter");
+    schoolSelect.innerHTML = '<option value="all">All Schools</option>';
+    Object.values(window.schoolMap).forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = s.name;
+        schoolSelect.appendChild(opt);
+    });
+
+    // reload leaderboard on input
+    document.getElementById("search").addEventListener("input", loadLeaderboard);
+    schoolSelect.addEventListener("change", loadLeaderboard);
+    document.getElementById("sortBy").addEventListener("change", loadLeaderboard);
+
+    loadLeaderboard();
+}
+initLeaderboardPage();
+</script>
+
 </body>
 </html>

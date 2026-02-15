@@ -1,8 +1,7 @@
 [
   {
     "id": "school_1",
-    "name": "AFG",
-    "location": "Bavaria, Germany",
-    "activePlayers": ["player_1", "player_2", "player_3"]
+    "name": "AFG Erding",
+    "location": "Bavaria, Germany"
   }
 ]

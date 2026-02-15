@@ -1,56 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>DSSG - Player Profile</title>
-    <link rel="stylesheet" href="../css/main.css">
+<meta charset="UTF-8">
+<title>DSSG - Player Profile</title>
+<link rel="stylesheet" href="/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav>
-        <a href="../index.html">Start</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="games.html">Games</a>
-        <a href="profile.html">Players</a>
-        <a href="admin.html">Staff</a>
-    </nav>
 
-    <main>
-        <h1>Player Profile</h1>
-        <section id="player-info">
-            <h2>Player Name</h2>
-            <p>Elo: 287</p>
-            <p>School: AHG</p>
-            <p>Tags: [Top Player, Magnus Moment]</p>
-        </section>
+<!-- School Popup -->
+<div id="school-popup" style="position:absolute; display:none; z-index:1000; padding:10px; background:#222; color:#fff; border-radius:5px; box-shadow:0 0 10px rgba(0,0,0,0.5);">
+  <div id="popup-content" style="display:flex; align-items:center; gap:10px;">
+    <img id="popup-logo" src="" alt="Logo" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+    <div id="popup-text"></div>
+  </div>
+</div>
 
-        <section id="match-history">
-            <h2>Match History</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>White</th>
-                        <th>Black</th>
-                        <th>Result</th>
-                        <th>Elo Change</th>
-                        <th>View</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2026-02-08</td>
-                        <td>David</td>
-                        <td>You</td>
-                        <td>1-0</td>
-                        <td>+12</td>
-                        <td><a href="game.html?id=match_1">View Game</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-left"><img src="/images/logo.avif" class="logo" alt="DSSG Logo"></div>
+  <div class="nav-right">
+    <a href="/index.html">Start</a>
+    <a href="/pages/leaderboard.html">Leaderboard</a>
+    <a href="/pages/games.html">Games</a>
+    <a href="/pages/admin.html">Staff</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+</nav>
 
-    <script src="../scripts/app.js"></script>
+<main>
+<h1 id="name"></h1>
+<p id="school"></p>
+<p id="elo"></p>
+
+<h2>Match History</h2>
+<table border="1">
+<thead>
+<tr><th>Date</th><th>White</th><th>Black</th><th>Result</th><th>View</th></tr>
+</thead>
+<tbody id="list"></tbody>
+</table>
+
+<script src="/scripts/app.js"></script>
+<script>
+loadProfile();
+</script>
+
+</main>
 </body>
 </html>

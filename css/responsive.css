@@ -1,0 +1,28 @@
+/* Mobile first - small screens */
+nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Hide logo in small screens if you add later? Or show on left */
+.logo {
+  height: 40px;
+}
+
+/* Hamburger menu styling (we’ll need JS to toggle visibility) */
+.hamburger {
+  display: block;
+  cursor: pointer;
+}
+
+/* Desktop breakpoint */
+@media(min-width: 768px){
+  nav {
+    justify-content: center;
+    gap: 30px;
+  }
+  .hamburger {
+    display: none;
+  }
+}
