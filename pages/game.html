@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Chess.js (logic) -->
-<script src="https://cdn.jsdelivr.net/npm/chess.js@1.1.0/chess.min.js"></script>
-
-<!-- Chessboard.js (UI) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard.min.js"></script>
 <meta charset="UTF-8">
 <title>DSSG - Game Viewer</title>
 <link rel="stylesheet" href="../css/main.css">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chessground@7.1.1/dist/chessground.min.js"></script>
+<script src="../scripts/app.js" defer></script>
+<style>
+  #game-header { display:flex; justify-content:space-between; margin-bottom:10px; }
+  #game-players { display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+  #game-result { text-align:center; font-weight:bold; margin:10px 0; font-size:1.2em; }
+  #game-moves { border: 2px solid green; border-radius:10px; padding:10px; background:#f9f9f9; margin-top:20px; white-space:pre-wrap; font-family:monospace; }
+  #interactive-board { margin:0 auto; width:400px; max-width:90%; aspect-ratio:1; }
+  .player-name { font-weight:bold; }
+  #game-header div { font-size:0.95em; color:#333; }
+</style>
 </head>
 <body>
 
@@ -35,24 +41,33 @@
 </nav>
 
 <main>
+  <h1>Game Viewer</h1>
 
-<h1>Game Viewer</h1>
+  <!-- Top info -->
+  <div id="game-header">
+    <div id="game-date"></div>
+    <div id="game-school"></div>
+  </div>
 
-<!-- Game Info -->
-<section id="game-info"></section>
+  <!-- Board -->
+  <div id="interactive-board"></div>
 
-<!-- Moves / board -->
-<section id="game-moves"></section>
+  <!-- Players and result -->
+  <div id="game-players">
+    <div id="white-player"></div>
+    <div id="black-player"></div>
+  </div>
+  <div id="game-result"></div>
 
-<!-- Future: Interactive chessboard goes here -->
-<div id="interactive-board" style="margin-top:20px;"></div>
-
+  <!-- Moves -->
+  <div id="game-moves"></div>
 </main>
 
-<script src="../scripts/app.js"></script>
 <script>
-loadGame();
-setupSchoolPopups();
+document.addEventListener("DOMContentLoaded", () => {
+    loadGame();
+    setupSchoolPopups();
+});
 </script>
 
 </body>

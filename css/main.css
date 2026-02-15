@@ -10,14 +10,30 @@ body {
 }
 
 /* Navbar */
+/* Navbar fixes */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #1a1a1a; /* dark gray bg */
-  color: #9be564; /* green highlights */
-  font-family: "Outfit", sans-serif;
+    background-color: #1a1a1a; /* dark gray instead of reddish */
+    color: white;
+    font-size: 1.3rem; /* bigger text on PC */
+    padding: 20px 40px; /* bigger navbar height */
+}
+
+.navbar a {
+    color: #00ff00; /* green links */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.navbar a:hover {
+    color: #aaffaa;
+}
+
+/* Responsive bigger navbar */
+@media(min-width: 1024px){
+    .navbar {
+        font-size: 1.5rem;
+        padding: 25px 50px;
+    }
 }
 
 .nav-left .logo {

@@ -200,55 +200,80 @@ async function loadGame() {
     const id = new URLSearchParams(location.search).get("id");
     if (!id) return;
     const map = await initData();
-    const match = window.matches.find(m => m.id===id);
+    const match = window.matches.find(m => m.id === id);
     if (!match) return;
 
     const white = map[match.white];
     const black = map[match.black];
 
-    const info = document.getElementById("game-info");
-    if (info) {
-        info.innerHTML = `<p><strong>Date:</strong> ${match.date}</p>
-                          <p><strong>White:</strong> <a href="/pages/profile.html?id=${white.id}">${white.name}</a> (${white.elo})</p>
-                          <p><strong>Black:</strong> <a href="/pages/profile.html?id=${black.id}">${black.name}</a> (${black.elo})</p>
-                          <p><strong>Result:</strong> ${match.result}</p>
-                          <p><strong>Elo Before:</strong> ${match.eloBeforeWhite} | ${match.eloBeforeBlack}</p>
-                          <p><strong>Elo After:</strong> ${match.eloAfterWhite} | ${match.eloAfterBlack}</p>
-                          <p><strong>End Reason:</strong> ${match.endReason}</p>
-                          <p><strong>School:</strong> <span class="school-name" data-school="${match.school}">${window.schoolMap[match.school]?.name || match.school}</span></p>`;
+    // Top info
+    document.getElementById("game-date").textContent = `Date: ${match.date}`;
+    document.getElementById("game-school").textContent = `School: ${window.schoolMap[match.school]?.name || match.school}`;
+
+    // Players
+    document.getElementById("white-player").innerHTML = `<span class="player-name">${white.name}</span>`;
+    document.getElementById("black-player").innerHTML = `<span class="player-name">${black.name}</span>`;
+
+    // Result centered
+    document.getElementById("game-result").textContent = `Result: ${match.result}`;
+
+    // Moves box
+    const movesBox = document.getElementById("game-moves");
+    movesBox.style.whiteSpace = "pre-wrap";
+    movesBox.style.border = "2px solid green";
+    movesBox.style.borderRadius = "10px";
+    movesBox.style.padding = "10px";
+    movesBox.style.background = "#e6f7e6"; // soft green so it's not blinding
+    movesBox.style.fontFamily = "monospace";
+    movesBox.style.fontSize = "0.95em";
+    movesBox.style.width = "100%";
+    movesBox.style.boxSizing = "border-box";
+    movesBox.style.overflowX = "auto"; // allows scrolling if moves overflow
+
+    // Format moves nicely, filling the box
+    let movesText = '';
+    for (let i = 0; i < match.moves.length; i += 2) {
+        const moveNum = (i / 2) + 1;
+        const wMove = match.moves[i] || '';
+        const bMove = match.moves[i + 1] || '';
+        movesText += `${moveNum}. ${wMove} ${bMove}  `;
     }
+    movesBox.textContent = movesText;
 
-    const movesSection = document.getElementById("game-moves");
-    if (movesSection) movesSection.innerHTML = `<h2>Moves</h2><pre>${match.moves.join(" ")}</pre>`;
-
-    // Interactive board
+    // Interactive board with Chessground
+    const chess = new Chess();
     const boardDiv = document.getElementById("interactive-board");
-    if (boardDiv) {
-        const chess = new Chess();
-        const board = Chessboard('interactive-board', { draggable: true, position: 'start' });
-        let idx = 0;
+    boardDiv.innerHTML = ''; // reset
+    const board = Chessground(boardDiv, {
+        orientation: 'white',
+        movable: { free: false, color: 'both' },
+        fen: 'start'
+    });
 
-        const nextBtn = document.createElement("button");
-        nextBtn.textContent = "Next";
-        const prevBtn = document.createElement("button");
-        prevBtn.textContent = "Prev";
-        boardDiv.appendChild(prevBtn);
-        boardDiv.appendChild(nextBtn);
+    // Add Prev / Next buttons
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "Prev";
+    prevBtn.style.marginRight = "10px";
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next";
+    boardDiv.appendChild(prevBtn);
+    boardDiv.appendChild(nextBtn);
 
-        nextBtn.onclick = () => {
-            if (idx >= match.moves.length) return;
-            chess.move(match.moves[idx]);
-            board.position(chess.fen());
-            idx++;
-        };
-        prevBtn.onclick = () => {
-            if (idx <= 0) return;
-            idx--;
-            chess.reset();
-            for (let i=0;i<idx;i++) chess.move(match.moves[i]);
-            board.position(chess.fen());
-        };
-    }
+    let idx = 0;
+    nextBtn.onclick = () => {
+        if (idx >= match.moves.length) return;
+        chess.move(match.moves[idx]);
+        board.set({ fen: chess.fen() });
+        idx++;
+    };
+
+    prevBtn.onclick = () => {
+        if (idx <= 0) return;
+        idx--;
+        chess.reset();
+        for (let i = 0; i < idx; i++) chess.move(match.moves[i]);
+        board.set({ fen: chess.fen() });
+    };
 
     setupSchoolPopups();
 }
