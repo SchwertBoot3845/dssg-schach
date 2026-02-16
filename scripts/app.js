@@ -78,7 +78,7 @@ function setupSchoolPopups() {
     popup.addEventListener("mouseleave", hidePopup);
 }
 
-// ---------- HOME PAGE ----------
+// ---------- HOME PAGE FEATURED GAME ----------
 async function populateHome() {
     const map = await initData();
     if (!window.matches.length) return;
@@ -97,19 +97,27 @@ async function populateHome() {
                 ${lastMatch.result} | 
                 <span class="school-name" data-school="${lastMatch.school}">${window.schoolMap[lastMatch.school]?.name || lastMatch.school}</span>
             </p>
-            <div id="featured-board" style="width:300px; aspect-ratio:1;"></div>
+            <div id="featured-board" style="width:300px; max-width:100%; aspect-ratio:1;"></div>
         `;
+
         const chess = new Chess();
-        const board = Chessboard('featured-board', { draggable: false, position: 'start' });
+        const ground = Chessground(document.getElementById("featured-board"), {
+            fen: chess.fen(),
+            orientation: 'white',
+            coordinates: true,
+            movable: { free: false, color: 'both' }
+        });
+
         let idx = 0;
         function step() {
             if (idx >= lastMatch.moves.length) return;
             chess.move(lastMatch.moves[idx]);
-            board.position(chess.fen());
+            ground.set({ fen: chess.fen() });
             idx++;
             setTimeout(step, 700);
         }
         step();
+
         feat.onclick = () => window.location.href = `/pages/game.html?id=${lastMatch.id}`;
     }
 
@@ -118,6 +126,7 @@ async function populateHome() {
     if (recent) {
         recent.innerHTML = "<h2>Recent Games</h2><div class='recent-container' style='display:flex; gap:10px; overflow-x:auto;'></div>";
         const container = recent.querySelector(".recent-container");
+
         window.matches.slice(-3).reverse().forEach(m => {
             const div = document.createElement("div");
             div.style.width = "150px";
@@ -126,16 +135,22 @@ async function populateHome() {
             div.style.cursor = "pointer";
 
             const chessMini = new Chess();
-            const miniBoard = Chessboard(div, { draggable: false, position: 'start' });
+            const miniBoard = Chessground(div, {
+                fen: chessMini.fen(),
+                orientation: 'white',
+                coordinates: false,
+                movable: { free: false, color: 'both' }
+            });
+
             let idx = 0;
-            function step() {
+            function stepMini() {
                 if (idx >= m.moves.length) return;
                 chessMini.move(m.moves[idx]);
-                miniBoard.position(chessMini.fen());
+                miniBoard.set({ fen: chessMini.fen() });
                 idx++;
-                setTimeout(step, 500);
+                setTimeout(stepMini, 500);
             }
-            step();
+            stepMini();
 
             div.onclick = () => window.location.href = `/pages/game.html?id=${m.id}`;
             container.appendChild(div);
@@ -195,6 +210,7 @@ async function loadLeaderboard() {
     setupSchoolPopups();
 }
 
+
 // ---------- GAME VIEWER ----------
 async function loadGame() {
     const id = new URLSearchParams(location.search).get("id");
@@ -206,74 +222,56 @@ async function loadGame() {
     const white = map[match.white];
     const black = map[match.black];
 
-    // Top info
     document.getElementById("game-date").textContent = `Date: ${match.date}`;
     document.getElementById("game-school").textContent = `School: ${window.schoolMap[match.school]?.name || match.school}`;
+    document.getElementById("white-player").textContent = white.name;
+    document.getElementById("black-player").textContent = black.name;
+    document.getElementById("game-result").textContent = match.result;
 
-    // Players
-    document.getElementById("white-player").innerHTML = `<span class="player-name">${white.name}</span>`;
-    document.getElementById("black-player").innerHTML = `<span class="player-name">${black.name}</span>`;
-
-    // Result centered
-    document.getElementById("game-result").textContent = `Result: ${match.result}`;
-
-    // Moves box
+    // Moves
     const movesBox = document.getElementById("game-moves");
-    movesBox.style.whiteSpace = "pre-wrap";
-    movesBox.style.border = "2px solid green";
-    movesBox.style.borderRadius = "10px";
-    movesBox.style.padding = "10px";
-    movesBox.style.background = "#e6f7e6"; // soft green so it's not blinding
-    movesBox.style.fontFamily = "monospace";
-    movesBox.style.fontSize = "0.95em";
-    movesBox.style.width = "100%";
-    movesBox.style.boxSizing = "border-box";
-    movesBox.style.overflowX = "auto"; // allows scrolling if moves overflow
-
-    // Format moves nicely, filling the box
-    let movesText = '';
-    for (let i = 0; i < match.moves.length; i += 2) {
-        const moveNum = (i / 2) + 1;
-        const wMove = match.moves[i] || '';
-        const bMove = match.moves[i + 1] || '';
-        movesText += `${moveNum}. ${wMove} ${bMove}  `;
-    }
-    movesBox.textContent = movesText;
-
-    // Interactive board with Chessground
-    const chess = new Chess();
-    const boardDiv = document.getElementById("interactive-board");
-    boardDiv.innerHTML = ''; // reset
-    const board = Chessground(boardDiv, {
-        orientation: 'white',
-        movable: { free: false, color: 'both' },
-        fen: 'start'
+    movesBox.textContent = match.moves.map((m,i)=> i%2===0 ? `${Math.floor(i/2)+1}. ${m}` : `${m} `).join(' ');
+    Object.assign(movesBox.style, {
+        whiteSpace: "pre-wrap",
+        border: "2px solid #3aff3a",
+        borderRadius: "10px",
+        padding: "12px",
+        background: "#0c140c",
+        color: "#baffba",
+        fontFamily: "monospace",
+        fontSize: "0.95em",
+        width: "100%",
+        boxSizing: "border-box",
+        overflowX: "auto",
+        lineHeight: "1.6"
     });
 
-    // Add Prev / Next buttons
+    // Chessground board
+    const boardDiv = document.getElementById("interactive-board");
+    const ground = Chessground(boardDiv, {
+        fen: chess.fen(),
+        orientation: 'white',
+        coordinates: true,
+        movable: { free: false, color: 'both' }
+    });
+
+
+    // Board controls
+    const controls = document.createElement("div");
+    controls.style.textAlign = "center";
+    controls.style.marginTop = "10px";
     const prevBtn = document.createElement("button");
     prevBtn.textContent = "Prev";
-    prevBtn.style.marginRight = "10px";
     const nextBtn = document.createElement("button");
     nextBtn.textContent = "Next";
-    boardDiv.appendChild(prevBtn);
-    boardDiv.appendChild(nextBtn);
+    nextBtn.style.marginLeft = "10px";
+    controls.appendChild(prevBtn);
+    controls.appendChild(nextBtn);
+    boardDiv.after(controls);
 
     let idx = 0;
-    nextBtn.onclick = () => {
-        if (idx >= match.moves.length) return;
-        chess.move(match.moves[idx]);
-        board.set({ fen: chess.fen() });
-        idx++;
-    };
-
-    prevBtn.onclick = () => {
-        if (idx <= 0) return;
-        idx--;
-        chess.reset();
-        for (let i = 0; i < idx; i++) chess.move(match.moves[i]);
-        board.set({ fen: chess.fen() });
-    };
+    nextBtn.onclick = () => { if(idx>=match.moves.length) return; chess.move(match.moves[idx]); ground.set({ fen: chess.fen() }); idx++; };
+    prevBtn.onclick = () => { if(idx<=0) return; idx--; chess.reset(); for(let i=0;i<idx;i++) chess.move(match.moves[i]); ground.set({ fen: chess.fen() }); };
 
     setupSchoolPopups();
 }

@@ -103,6 +103,15 @@ table {
     margin: 15px 0;
 }
 
+#game-moves {
+  background: #0f1f14 !important;
+  color: #caffd8 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  line-height: 1.6 !important;
+  white-space: pre-wrap !important;
+}
+
 table, th, td {
     border: 1px solid #4CAF50;
 }

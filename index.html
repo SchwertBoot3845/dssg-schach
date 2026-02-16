@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Chess.js (global, works with old Chess() syntax) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
-
-<!-- Chessboard.js (UI) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/dist/chessboard.min.js"></script>
 <meta charset="UTF-8">
 <title>DSSG - Home</title>
+
+<!-- Fonts & Main CSS -->
 <link rel="stylesheet" href="/css/main.css">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+<!-- Chess.js & Chessground for mini boards -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js"></script>
+<link rel="stylesheet" href="/css/chessground.css">
+<script src="https://cdn.jsdelivr.net/npm/chessground@9.2.1/dist/chessground.min.js"></script>
+
+<!-- App JS -->
+<script src="/scripts/app.js" defer></script>
 </head>
 <body>
 
@@ -35,24 +39,25 @@
 </nav>
 
 <main>
-<h1>Home</h1>
+  <h1>Home</h1>
 
-<section id="featured-game"></section>
-<section id="recent-games"></section>
+  <section id="featured-game"></section>
+  <section id="recent-games"></section>
 
-<!-- Top 5 Players -->
-<section id="top-players">
-<h2>Top 5 Players</h2>
-<table border="1">
-<thead><tr><th>Rank</th><th>Name</th><th>Elo</th><th>School</th></tr></thead>
-<tbody id="topPlayersTable"></tbody>
-</table>
-</section>
+  <section id="top-players">
+    <h2>Top 5 Players</h2>
+    <table border="1">
+      <thead><tr><th>Rank</th><th>Name</th><th>Elo</th><th>School</th></tr></thead>
+      <tbody id="topPlayersTable"></tbody>
+    </table>
+  </section>
+</main>
 
-<script src="/scripts/app.js"></script>
 <script>
-populateHome();
-setupSchoolPopups();
+document.addEventListener("DOMContentLoaded", () => {
+  populateHome();
+  setupSchoolPopups();
+});
 </script>
 
 </body>

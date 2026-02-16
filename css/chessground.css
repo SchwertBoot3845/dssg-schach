@@ -1,0 +1,60 @@
+/* Container */
+.cg-board {
+  border: 2px solid #3aff3a; /* bright green border */
+  border-radius: 10px;
+  background-color: #0c140c; /* dark board background */
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Squares */
+.cg-board .cg-square.light {
+  background-color: #1a241a; /* slightly lighter dark green for light squares */
+}
+
+.cg-board .cg-square.dark {
+  background-color: #003300; /* dark green for dark squares */
+}
+
+/* Pieces */
+.cg-board .cg-piece {
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* so you can't drag if movable is false */
+}
+
+/* Coordinates (A-H, 1-8) */
+.cg-board .cg-coordinates {
+  font-size: 0.75em;
+  color: #baffba; /* match moves box green */
+}
+
+/* Highlight last move */
+.cg-board .cg-last-move {
+  background-color: rgba(58, 255, 58, 0.3);
+}
+
+/* Legal move hint (optional, if you enable move hints later) */
+.cg-board .cg-legal {
+  background-color: rgba(58, 255, 58, 0.5);
+}
+
+/* Hover squares */
+.cg-board .cg-hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Captured pieces (if any animation) */
+.cg-board .cg-captured {
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+/* Prevent selection and weird dragging effects */
+.cg-board,
+.cg-board * {
+  user-select: none;
+}
